@@ -1,7 +1,7 @@
 package br.com.alura.codechella.usecase.ticket;
 
-import br.com.alura.codechella.adapters.database.postgres.sales.SalesRepository;
-import br.com.alura.codechella.adapters.database.postgres.ticket.TicketRepository;
+import br.com.alura.codechella.adapters.repository.sales.SalesRepository;
+import br.com.alura.codechella.adapters.repository.ticket.TicketRepository;
 import br.com.alura.codechella.adapters.rest.ticket.TicketDTO;
 import br.com.alura.codechella.domain.ticket.Order;
 import br.com.alura.codechella.domain.ticket.Sales;

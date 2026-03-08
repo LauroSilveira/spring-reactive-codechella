@@ -2,6 +2,8 @@ package br.com.alura.codechella.adapters.rest.translation;
 
 import br.com.alura.codechella.adapters.rest.event.TranslationsDTO;
 import br.com.alura.codechella.domain.event.out.GetTranslationAdapter;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,7 +12,12 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 @RestController
+@RequiredArgsConstructor
 public class TranslationRestClient implements GetTranslationAdapter {
+
+    private static final String DEEP_L_AUTH_KEY = "DeepL-Auth-Key ";
+    @Value("${deepL-api-key}")
+    private String deepLApiKey;
 
     private static final String URL = "https://api-free.deepl.com/v2/translate";
     private final WebClient webClient = WebClient.builder()
@@ -24,7 +31,7 @@ public class TranslationRestClient implements GetTranslationAdapter {
         request.add("target_lang", languageTag.getValue());
 
         return webClient.post()
-                .header(HttpHeaders.AUTHORIZATION, "DeepL-Auth-Key " + "4ca8fea8-63b0-492a-99f4-853483f53883:fx")
+                .header(HttpHeaders.AUTHORIZATION, DEEP_L_AUTH_KEY + deepLApiKey)
                 .body(BodyInserters.fromFormData(request))
                 .retrieve()
                 .bodyToMono(TranslationsDTO.class)

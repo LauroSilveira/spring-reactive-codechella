@@ -1,4 +1,4 @@
-package br.com.alura.codechella.adapters.database.postgres.event;
+package br.com.alura.codechella.adapters.repository.event;
 
 import br.com.alura.codechella.domain.event.Event;
 import br.com.alura.codechella.domain.event.EventType;

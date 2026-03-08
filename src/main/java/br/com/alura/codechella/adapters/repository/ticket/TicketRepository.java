@@ -1,4 +1,4 @@
-package br.com.alura.codechella.adapters.database.postgres.ticket;
+package br.com.alura.codechella.adapters.repository.ticket;
 
 import br.com.alura.codechella.domain.ticket.Ticket;
 import org.springframework.data.r2dbc.repository.R2dbcRepository;

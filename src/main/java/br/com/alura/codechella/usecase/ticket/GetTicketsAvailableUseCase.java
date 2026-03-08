@@ -1,6 +1,6 @@
 package br.com.alura.codechella.usecase.ticket;
 
-import br.com.alura.codechella.adapters.database.postgres.ticket.TicketRepository;
+import br.com.alura.codechella.adapters.repository.ticket.TicketRepository;
 import br.com.alura.codechella.adapters.rest.ticket.TicketDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

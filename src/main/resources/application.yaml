@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: codechella
+
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/codechella
+    username: ${USERNAME_DB}
+    password: ${PASSWORD_DB}
+  flyway:
+    url: jdbc:postgresql://localhost:5432/codechella
+    password: ${PASSWORD_DB}
+    user: ${USERNAME_DB}

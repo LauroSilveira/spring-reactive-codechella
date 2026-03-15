@@ -3,11 +3,12 @@ spring:
     name: codechella
 
   r2dbc:
-    url: r2dbc:postgresql://localhost:5432/codechella
+    url: r2dbc:postgresql://localhost:5432/reactive_codechella_db
     username: ${USERNAME_DB}
     password: ${PASSWORD_DB}
   flyway:
-    url: jdbc:postgresql://localhost:5432/codechella
+    url: jdbc:postgresql://localhost:5432/reactive_codechella_db
     password: ${PASSWORD_DB}
     user: ${USERNAME_DB}
-deepL-api-key: ${API-KEY}
+
+deepL-api-key: ${API_KEY}

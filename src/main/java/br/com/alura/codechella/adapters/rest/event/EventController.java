@@ -51,13 +51,13 @@ public class EventController {
                 .doOnSuccess(sink::tryEmitNext);
     }
 
-    @DeleteMapping("{id}")
-    public Mono<Void> delete(@PathVariable final Long id) {
+    @DeleteMapping("/{id}")
+    public Mono<Void> delete(@PathVariable Long id) {
         return deleteEventUseCase.delete(id);
     }
 
-    @PatchMapping("{id}")
-    public Mono<EventDTO> update(@PathVariable Long id, @RequestBody final EventDTO dto) {
+    @PatchMapping("/{id}")
+    public Mono<EventDTO> update(@PathVariable final Long id, @RequestBody final EventDTO dto) {
         return updateEventUseCase.update(eventMapper.toEntity(dto), id).map(EventDTO::toDTO);
     }
 

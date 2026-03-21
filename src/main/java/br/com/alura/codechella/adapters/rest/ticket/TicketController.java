@@ -1,6 +1,6 @@
 package br.com.alura.codechella.adapters.rest.ticket;
 
-import br.com.alura.codechella.usecase.ticket.*;
+import br.com.alura.codechella.application.usecase.ticket.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +15,7 @@ import java.time.Duration;
 @RequiredArgsConstructor
 public class TicketController {
     private final FindAllTicketsUseCase findAllTicketsUseCase;
-    private final FindTicketByIdUserCase findTicketByIdUserCase;
+    private final FindTicketByIdUseCase findTicketByIdUseCase;
     private final CreateTicketUseCase createTicketUseCase;
     private final UpdateTicketUseCase updateTicketUseCase;
     private final DeleteTicketUseCase deleteTicketUseCase;
@@ -31,7 +31,7 @@ public class TicketController {
 
     @GetMapping("/{id}")
     public Mono<TicketDTO> findById(@PathVariable final Long id) {
-        return findTicketByIdUserCase.findById(id).map(TicketDTO::toDTO);
+        return findTicketByIdUseCase.findById(id).map(TicketDTO::toDTO);
     }
 
     @PostMapping
@@ -54,12 +54,15 @@ public class TicketController {
     @PostMapping("/purchase")
     public Mono<TicketDTO> purchaseTicket(@RequestBody final OrderTicketDTO orderTicketDTO) {
         return purchaseTicketUsecase.purchase(this.ticketMapper.toEntity(orderTicketDTO))
+                .map(TicketDTO::toDTO)
                 .doOnSuccess(sinksTicketDTO::tryEmitNext);
     }
 
     @GetMapping(value = "/{id}/available", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<TicketDTO> getTicketsAvailable(@PathVariable final Long id) {
-        return Flux.merge(getTicketsAvailableUseCase.getTicketsAvailable(id), sinksTicketDTO.asFlux())
+        final var ticketDTO = getTicketsAvailableUseCase.getTicketsAvailable(id)
+                .map(TicketDTO::toDTO);
+        return Flux.merge(ticketDTO, sinksTicketDTO.asFlux())
                 .delayElements(Duration.ofSeconds(3));
     }
 }

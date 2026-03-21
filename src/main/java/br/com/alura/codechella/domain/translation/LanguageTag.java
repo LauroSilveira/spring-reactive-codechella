@@ -1,4 +1,4 @@
-package br.com.alura.codechella.adapters.rest.translation;
+package br.com.alura.codechella.domain.translation;
 
 import lombok.Getter;
 

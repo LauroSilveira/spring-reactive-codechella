@@ -14,10 +14,10 @@ public record EventDTO(Long id,
 
     public static EventDTO toDTO(Event event) {
         return new EventDTO(
-                event.getId(),
-                event.getName(),
-                event.getDate(),
-                event.getDescription(),
-                event.getType());
+                event.id(),
+                event.name(),
+                event.date(),
+                event.description(),
+                event.type());
     }
 }

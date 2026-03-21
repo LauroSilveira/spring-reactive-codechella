@@ -1,6 +1,6 @@
-package br.com.alura.codechella.usecase.event;
+package br.com.alura.codechella.application.usecase.event;
 
-import br.com.alura.codechella.adapters.repository.event.EventRepository;
+import br.com.alura.codechella.domain.event.EventRepositoryPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -9,9 +9,9 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class DeleteEventUseCase {
 
-    private final EventRepository eventRepository;
+    private final EventRepositoryPort eventRepositoryPort;
 
     public Mono<Void> delete(final Long id) {
-        return eventRepository.deleteById(id);
+        return eventRepositoryPort.deleteById(id);
     }
 }

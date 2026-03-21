@@ -2,16 +2,17 @@ package br.com.alura.codechella.adapters.rest.translation;
 
 import br.com.alura.codechella.adapters.rest.event.TranslationsDTO;
 import br.com.alura.codechella.domain.event.out.GetTranslationAdapter;
+import br.com.alura.codechella.domain.translation.LanguageTag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
+import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-@RestController
+@Service
 @RequiredArgsConstructor
 public class TranslationRestClient implements GetTranslationAdapter {
 

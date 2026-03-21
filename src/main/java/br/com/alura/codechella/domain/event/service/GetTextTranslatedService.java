@@ -1,6 +1,6 @@
 package br.com.alura.codechella.domain.event.service;
 
-import br.com.alura.codechella.adapters.rest.translation.LanguageTag;
+import br.com.alura.codechella.domain.translation.LanguageTag;
 import br.com.alura.codechella.domain.event.out.GetTranslationAdapter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,5 @@
 package br.com.alura.codechella.adapters.rest.event;
 
-import br.com.alura.codechella.domain.event.Event;
 import br.com.alura.codechella.domain.event.EventType;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;

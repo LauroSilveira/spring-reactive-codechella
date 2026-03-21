@@ -1,7 +1,7 @@
 package br.com.alura.codechella.adapters.rest.event;
 
-import br.com.alura.codechella.adapters.rest.translation.LanguageTag;
-import br.com.alura.codechella.usecase.event.*;
+import br.com.alura.codechella.domain.translation.LanguageTag;
+import br.com.alura.codechella.application.usecase.event.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -47,7 +47,8 @@ public class EventController {
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public Mono<EventDTO> create(@RequestBody final EventDTO dto) {
-        return createEventUseCase.create(eventMapper.toEntity(dto)).map(EventDTO::toDTO)
+        return createEventUseCase.create(eventMapper.toDomain(dto))
+                .map(EventDTO::toDTO)
                 .doOnSuccess(sink::tryEmitNext);
     }
 
@@ -58,7 +59,7 @@ public class EventController {
 
     @PatchMapping("/{id}")
     public Mono<EventDTO> update(@PathVariable final Long id, @RequestBody final EventDTO dto) {
-        return updateEventUseCase.update(eventMapper.toEntity(dto), id).map(EventDTO::toDTO);
+        return updateEventUseCase.update(eventMapper.toDomain(dto), id).map(EventDTO::toDTO);
     }
 
     //TEXT_EVENT_STREAM_VALUE enables Server-Sent Events, the server send updates to client.

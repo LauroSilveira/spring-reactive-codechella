@@ -1,7 +1,7 @@
-package br.com.alura.codechella.usecase.event;
+package br.com.alura.codechella.application.usecase.event;
 
-import br.com.alura.codechella.adapters.repository.event.EventRepository;
 import br.com.alura.codechella.domain.event.Event;
+import br.com.alura.codechella.domain.event.EventRepositoryPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -11,13 +11,13 @@ import reactor.core.publisher.Mono;
 @Component
 @RequiredArgsConstructor
 public class UpdateEventUseCase {
-    private final EventRepository eventRepository;
+    private final EventRepositoryPort eventRepositoryPort;
 
     public Mono<Event> update(final Event entity, final Long id) {
-        return eventRepository.findById(id)
+        return eventRepositoryPort.findById(id)
                 .switchIfEmpty(Mono.defer(() -> Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND, "Event not found"))))
                 .map(event -> event.updateFields(entity))
-                .flatMap(this.eventRepository::save);
+                .flatMap(this.eventRepositoryPort::save);
 
     }
 }

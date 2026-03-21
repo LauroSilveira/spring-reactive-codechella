@@ -1,7 +1,7 @@
-package br.com.alura.codechella.usecase.event;
+package br.com.alura.codechella.application.usecase.event;
 
 import br.com.alura.codechella.domain.event.Event;
-import br.com.alura.codechella.adapters.repository.event.EventRepository;
+import br.com.alura.codechella.domain.event.EventRepositoryPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;
@@ -9,9 +9,10 @@ import reactor.core.publisher.Flux;
 @Component
 @RequiredArgsConstructor
 public class FindAllEventsUseCase {
-    private final EventRepository eventRepository;
+    private final EventRepositoryPort eventRepositoryPort;
 
     public Flux<Event> findAll() {
-        return this.eventRepository.findAll();
+        return eventRepositoryPort.findAll();
+
     }
 }

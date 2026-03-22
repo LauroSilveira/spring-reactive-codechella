@@ -1,5 +1,6 @@
 package br.com.alura.codechella.application.usecase.ticket;
 
+import br.com.alura.codechella.domain.exception.TicketNotFoundException;
 import br.com.alura.codechella.domain.ticket.Ticket;
 import br.com.alura.codechella.domain.ticket.TicketRepositoryPort;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ public class FindTicketByIdUseCase {
     private final TicketRepositoryPort ticketRepositoryPort;
 
     public Mono<Ticket> findById(final Long id) {
-        return ticketRepositoryPort.findById(id);
+        return ticketRepositoryPort.findById(id)
+                .switchIfEmpty(Mono.error(new TicketNotFoundException(id)));
     }
 }

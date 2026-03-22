@@ -1,5 +1,6 @@
 package br.com.alura.codechella.application.usecase.ticket;
 
+import br.com.alura.codechella.domain.exception.TicketNotFoundException;
 import br.com.alura.codechella.domain.ticket.Order;
 import br.com.alura.codechella.domain.ticket.Sales;
 import br.com.alura.codechella.domain.ticket.Ticket;
@@ -17,6 +18,7 @@ public class PurchaseTicketUseCase {
     @Transactional
     public Mono<Ticket> purchase(final Order order) {
         return ticketRepositoryPort.findById(order.ticketId())
+                .switchIfEmpty(Mono.error(new TicketNotFoundException(order.ticketId())))
                 .flatMap(ticket -> {
                     final var sales = new Sales(ticket.id(), ticket.total());
                     return ticketRepositoryPort.save(sales).then(Mono.defer(() -> {

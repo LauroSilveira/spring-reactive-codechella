@@ -2,6 +2,10 @@ spring:
   application:
     name: codechella
 
+  webflux:
+    problemdetails:
+      enabled: true
+
   r2dbc:
     url: r2dbc:postgresql://localhost:5432/reactive_codechella_db
     username: ${USERNAME_DB}

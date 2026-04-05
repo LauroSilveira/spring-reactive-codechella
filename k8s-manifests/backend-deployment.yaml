@@ -1,0 +1,29 @@
+apiVersion: app/v1
+
+kind: Deployment
+metadata:
+  name: codechella-api
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: codechella-api
+  template:
+    metadata:
+      labels:
+        app: codechella-api
+    spec:
+      containers:
+        - name: codechella-api
+        image: laurocorreia/reactive-api:latest
+        ports:
+          - containerPort: 8080
+          env:
+            - name: API_KEY
+              value: 4ca8fea8-63b0-492a-99f4-853483f53883:fx
+            - name: PASSWORD_DB
+              value:
+            - name: USERNAME_DB
+              value: laurocorreia
+

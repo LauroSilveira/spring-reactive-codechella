@@ -19,7 +19,7 @@ public class TicketAdapterRepository implements TicketRepositoryPort {
     @Override
     public Mono<Ticket> save(final Ticket ticket) {
         return ticketRepository.save(TicketEntity.toEntity(ticket))
-                .map(ticketRepositoryMapper::toDomain);
+                .map(entity -> ticketRepositoryMapper.toDomain(ticket, entity));
     }
 
     @Override

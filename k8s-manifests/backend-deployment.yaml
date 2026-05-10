@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: codechella-api
+  namespace: codechella-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: codechella-api
+  template:
+    metadata:
+      labels:
+        app: codechella-api
+    spec:
+      containers:
+        - name: codechella-api
+          image: laurocorreia/codechella-api:latest
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - secretRef:
+                name: codechella-api-secret
+          volumeMounts:
+            - name: config-volume
+              mountPath:  /codechella-api/config
+      volumes:
+        - name: config-volume
+          configMap:
+            name: codechella-api-config

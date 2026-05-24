@@ -5,27 +5,24 @@ services:
     image: postgres
     container_name: container-postgresql
     environment:
-      POSTGRES_DB: codechella
-      POSTGRES_USER: usuario
-      POSTGRES_PASSWORD: senha
+      POSTGRES_DB: reactive_codechella_db
+      POSTGRES_USER: laurocorreia
+      POSTGRES_PASSWORD:
+      POSTGRES_HOST_AUTH_METHOD: trust
     ports:
       - "5432:5432"
 
   codechella-webflux:
-    image:
+    image: laurocorreia/spring-reactive-codechella:1.0.0
     build:
       context: .
       dockerfile: ./Dockerfile
+    env_file:
+      - .env
     depends_on:
       - postgres  
     ports:
       - 8080:8080    
     volumes:
       - .:/app
-    environment:
-      SPRING_R2DBC_URL: r2dbc:postgresql://postgres:5432/codechella
-      SPRING_R2DBC_USERNAME: usuario
-      SPRING_R2DBC_PASSWORD: senha
-      SPRING_FLYWAY_URL: jdbc:postgresql://postgres:5432/codechella
-      SPRING_FLYWAY_USER: usuario
-      SPRING_FLYWAY_PASSWORD: senha 
+

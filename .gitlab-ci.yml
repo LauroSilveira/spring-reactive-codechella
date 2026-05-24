@@ -18,6 +18,7 @@ test:
     USERNAME_DB: laurocorreia
     PASSWORD_DB: ""
   script:
+    - apt-get update && apt-get install -y postgresql-client
     - until pg_isready -h postgres -p 5432; do sleep 1; done
     - mvn test
   rules:

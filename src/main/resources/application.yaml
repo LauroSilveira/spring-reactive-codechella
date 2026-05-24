@@ -7,11 +7,11 @@ spring:
       enabled: true
 
   r2dbc:
-    url: r2dbc:postgresql://{POSTGRES_HOST:localhost:5432}/reactive_codechella_db
+    url: r2dbc:postgresql://${POSTGRES_HOST:localhost:5432}/reactive_codechella_db
     username: ${USERNAME_DB}
     password: ${PASSWORD_DB}
   flyway:
-    url: jdbc:postgresql://{POSTGRES_HOST:localhost:5432}reactive_codechella_db
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost:5432}/reactive_codechella_db
     password: ${PASSWORD_DB}
     user: ${USERNAME_DB}
 

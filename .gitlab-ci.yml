@@ -1,0 +1,32 @@
+stages:
+  - test
+  - release
+
+test:
+  stage: test
+  image: maven:3.9-eclipse-temurin-25
+  services:
+    - name: postgres:15
+      alias: postgres
+  variables:
+    POSTGRES_DB: reactive_codechella_db
+    POSTGRES_USER: laurocorreia
+    POSTGRES_PASSWORD: ""
+    POSTGRES_HOST_AUTH_METHOD: trust
+    POSTGRES_HOST: postgres:5432
+    USERNAME_DB: laurocorreia
+    PASSWORD_DB: ""
+  script:
+    - mvn test
+  only:
+    - merge_requests
+    - branches
+
+release-major:
+  stage: release
+  image: maven:3.9-eclipse-temurin-25
+  script:
+    - git config user.email "ci@gitlab.com"
+    - git config user.name "GitLab CI"
+    - mvn build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.nextMajorVersion}.0.0 versions:commit
+    - export NEW_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceSt

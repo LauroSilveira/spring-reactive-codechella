@@ -15,4 +15,7 @@ spring:
     password: ${PASSWORD_DB}
     user: ${USERNAME_DB}
 
-deepL-api-key: ${API_KEY}
+deepL:
+  api-key: ${API_KEY}
+  url: "https://api-free.deepl.com/v2/translate"
+  auth-key: "DeepL-Auth-Key"

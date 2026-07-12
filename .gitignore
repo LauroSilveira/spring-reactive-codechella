@@ -19,7 +19,8 @@ target/
 *.iml
 *.ipr
 .DS_Store
-
+k8s-manifests/secret.yaml
+.env
 
 ### NetBeans ###
 /nbproject/private/

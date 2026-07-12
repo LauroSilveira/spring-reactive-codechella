@@ -1,0 +1,56 @@
+stages:
+  - test
+  - release
+
+test:
+  stage: test
+  image: maven:3.9-eclipse-temurin-25
+  services:
+    - name: postgres:15
+      alias: postgres
+  variables:
+    POSTGRES_DB: reactive_codechella_db
+    POSTGRES_USER: laurocorreia
+    POSTGRES_PASSWORD: ""
+    POSTGRES_HOST_AUTH_METHOD: trust
+    POSTGRES_HOST: postgres
+    POSTGRES_PORT: 5432
+    USERNAME_DB: laurocorreia
+    PASSWORD_DB: ""
+  script:
+    - apt-get update && apt-get install -y postgresql-client
+    - until pg_isready -h postgres -p 5432; do sleep 1; done
+    - mvn test
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_BRANCH'
+
+release-major:
+  stage: release
+  image: maven:3.9-eclipse-temurin-25
+  rules:
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /release-major/'
+  script:
+    - git config user.email "lauro.silc@gmail.com"
+    - git config user.name "lauro.silc"
+    - mvn build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.nextMajorVersion}.0.0 versions:commit
+
+release-minor:
+  stage: release
+  image: maven:3.9-eclipse-temurin-25
+  rules:
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /release-minor/'
+  script:
+    - git config user.email "lauro.silc@gmail.com"
+    - git config user.name "lauro.silc"
+    - mvn build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.nextMinorVersion}.0 versions:commit
+
+release-patch:
+  stage: release
+  image: maven:3.9-eclipse-temurin-25
+  rules:
+    - if: '$CI_MERGE_REQUEST_LABELS =~ /release-patch/'
+  script:
+    - git config user.email "lauro.silc@gmail.com"
+    - git config user.name "lauro.silc"
+    - mvn build-helper:parse-version versions:set -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.minorVersion}.\${parsedVersion.nextIncrementalVersion} versions:commit

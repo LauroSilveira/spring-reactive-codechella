@@ -60,9 +60,9 @@ public class TicketController {
 
     @GetMapping(value = "/{id}/available", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<TicketDTO> getTicketsAvailable(@PathVariable final Long id) {
-        final var ticketDTO = getTicketsAvailableUseCase.getTicketsAvailable(id)
-                .map(TicketDTO::toDTO);
-        return Flux.merge(ticketDTO, sinksTicketDTO.asFlux())
+        return getTicketsAvailableUseCase.getTicketsAvailable(id)
+                .map(TicketDTO::toDTO)
+                .mergeWith(sinksTicketDTO.asFlux())
                 .delayElements(Duration.ofSeconds(3));
     }
 }

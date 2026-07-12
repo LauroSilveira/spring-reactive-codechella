@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: codechella-api-config
+  namespace: codechella-api
+data:
+  application.yml: |
+    spring:
+      application:
+        name: codechella
+
+      webflux:
+        problemdetails:
+          enabled: true
+
+      r2dbc:
+        url: r2dbc:postgresql://postgres:5432/reactive_codechella_db
+        username: ${USERNAME_DB}
+        password: ${PASSWORD_DB}
+      flyway:
+        url: jdbc:postgresql://postgres:5432/reactive_codechella_db
+        password: ${PASSWORD_DB}
+        user: ${USERNAME_DB}
+
+    deepL-api-key: ${API_KEY}

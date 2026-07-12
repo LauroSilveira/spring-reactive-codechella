@@ -7,12 +7,15 @@ spring:
       enabled: true
 
   r2dbc:
-    url: r2dbc:postgresql://localhost:5432/reactive_codechella_db
+    url: r2dbc:postgresql://${POSTGRES_HOST:localhost:5432}/reactive_codechella_db
     username: ${USERNAME_DB}
     password: ${PASSWORD_DB}
   flyway:
-    url: jdbc:postgresql://localhost:5432/reactive_codechella_db
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost:5432}/reactive_codechella_db
     password: ${PASSWORD_DB}
     user: ${USERNAME_DB}
 
-deepL-api-key: ${API_KEY}
+deepL:
+  api-key: ${API_KEY}
+  url: "https://api-free.deepl.com/v2/translate"
+  auth-key: "DeepL-Auth-Key"

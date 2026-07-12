@@ -8,11 +8,20 @@ import org.springframework.stereotype.Component;
 public class TicketRepositoryMapper {
 
     public Ticket toDomain(final TicketEntity ticketEntity) {
-        return new Ticket(ticketEntity.getId(), ticketEntity.getEventId(),
-                ticketEntity.getType(), ticketEntity.getAmount(), ticketEntity.getTotal());
+        return new Ticket(
+                ticketEntity.getId(),
+                ticketEntity.getEventId(),
+                ticketEntity.getType(),
+                ticketEntity.getAmount(),
+                ticketEntity.getTotal());
     }
 
     public Sales toDomain(final SalesEntity salesEntity) {
         return new Sales(salesEntity.getId(), salesEntity.getTicketId(), salesEntity.getTotal());
+    }
+
+    public Ticket toDomain(Ticket ticket, TicketEntity entity) {
+        return new  Ticket(ticket.id(), entity.getEventId(), entity.getType(), entity.getAmount(),
+                entity.getTotal());
     }
 }

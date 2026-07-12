@@ -16,11 +16,15 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class TranslationRestClient implements GetTranslationAdapter {
 
-    private static final String DEEP_L_AUTH_KEY = "DeepL-Auth-Key ";
-    @Value("${deepL-api-key}")
+    @Value("${deepL.auth-key}")
+    private String DEEP_L_AUTH_KEY;
+
+    @Value("${deepL.api-key}")
     private String deepLApiKey;
 
-    private static final String URL = "https://api-free.deepl.com/v2/translate";
+    @Value("${deepL.url}")
+    private String URL;
+
     private final WebClient webClient = WebClient.builder()
             .baseUrl(URL)
             .build();
